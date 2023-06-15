@@ -1,0 +1,12 @@
+{% extends 'pr_tracking_web/base.html' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+<h1>Exercise List Here</h1>
+<ul>
+    {% for exercise in exercises %}
+        <li>{{ exercise.exercise_name }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

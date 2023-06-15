@@ -37,11 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'crispy_forms',
+    'crispy_bootstrap5',
     'rest_framework',
     'rest_framework.authtoken',
-    "pr_tracking_web",
+    "pr_tracking_web.apps.PrTrackingWebConfig",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,8 +84,12 @@ WSGI_APPLICATION = 'monolith.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db5gl9li1igqs3',
+        'USER': 'voaytafmxeqtmi',
+        'PASSWORD': '3b1809a3238f3ad3a79420474a674be2be9c70a73a00fe52e66b321eb1856c37',
+        'HOST': 'ec2-44-213-228-107.compute-1.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
@@ -125,3 +134,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/home'
+LOGOUT_REDIRECT_URL = '/login'

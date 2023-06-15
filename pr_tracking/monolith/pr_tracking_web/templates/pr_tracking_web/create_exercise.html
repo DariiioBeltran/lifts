@@ -1,0 +1,12 @@
+{% extends 'pr_tracking_web/base.html' %}
+
+{% block title %}Create An Exercise{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}{{ form | crispy }}
+
+        <button type="submit" class="btn btn-success">Add Exercise</button>
+    </form>
+{% endblock %}
