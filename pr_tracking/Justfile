@@ -1,0 +1,15 @@
+setup-dev:
+    docker-compose up --build
+    poetry install
+
+lint:
+    pre-commit run --all-files
+
+run:
+    docker-compose up
+
+make-migrations:
+    docker-compose run web /root/.local/bin/poetry run python monolith/manage.py makemigrations
+
+migrate:
+    docker-compose run web /root/.local/bin/poetry run python monolith/manage.py migrate
