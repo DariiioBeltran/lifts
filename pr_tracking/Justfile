@@ -13,3 +13,6 @@ make-migrations:
 
 migrate:
     docker-compose run web /root/.local/bin/poetry run python monolith/manage.py migrate
+
+create-superuser:
+    docker-compose run web /root/.local/bin/poetry run python monolith/manage.py createsuperuser
