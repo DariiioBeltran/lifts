@@ -6,7 +6,7 @@ lint:
     pre-commit run --all-files
 
 run:
-    docker-compose up
+    docker-compose up --build # TODO: fix this to use volumes, atm we need to rebuild the container to catch any frontend changes (maybe even backend I haven't tried)
 
 make-migrations:
     docker-compose run web /root/.local/bin/poetry run python monolith/manage.py makemigrations
