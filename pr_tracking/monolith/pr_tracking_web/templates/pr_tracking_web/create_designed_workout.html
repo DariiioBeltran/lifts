@@ -2,17 +2,62 @@
 
 {% block title %}Create An Exercise{% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-    <h1>SOME TITLE</h1>
-    <form method="post">
-        {% csrf_token %}
+    <div style="text-align: center;">
+        <h1>Design a Workout</h1>
+        <hr />
 
-        {{ formset.management_form }}
-        {% for form in formset %}
-            {{ form }}
-            <hr />
-        {% endfor %}
+        <form id="form-container" method="POST">
+            {% csrf_token %}
 
-        <button type="submit" class="btn btn-success">Add Workout</button>
-    </form>
+            {{ workout_name | crispy }}
+
+            {{ formset.management_form }}
+            {% for form in formset %}
+                <div class="exercise-form">
+                    {{ form.as_p }}
+                </div>
+            {% endfor %}
+
+            <button id="add-form" type="button" class="btn btn-success">Add An Exercise</button>
+            <button type="submit" class="btn btn-success">Add Workout</button>
+        </form>
+    </div>
+
+    <script>
+        let birdForm = document.querySelectorAll(".exercise-form")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+        let formNum = birdForm.length-1
+        addButton.addEventListener('click', addForm)
+
+        function clearChildren(node) {
+            console.log(node)
+            // we are recursiverly traversing the new form and clearing every text and number input field
+            // TODO: investigate the "delete" check box and figure out how to add delete functionality in a better way
+            for (childNode of node.childNodes) {
+                if (childNode.tagName && childNode.tagName.toLowerCase() === "input" && ["text", "number"].includes(childNode.type)) {
+                    childNode.value = "";
+                }
+                clearChildren(childNode)
+            }
+        }
+
+        function addForm(e) {
+            e.preventDefault()
+
+            let newForm = birdForm[0].cloneNode(true)
+            let formRegex = RegExp(`form-(\\d){1}-`,'g')
+
+            formNum++
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+            clearChildren(newForm)
+            container.insertBefore(newForm, addButton)
+            totalForms.setAttribute('value', `${formNum+1}`)
+        }
+    </script>
 {% endblock %}

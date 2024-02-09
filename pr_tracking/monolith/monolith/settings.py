@@ -94,17 +94,10 @@ DATABASES = {
         "NAME": "postgres",
         "USER": "postgres",
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": "db",
+        "HOST": "localhost",
         "PORT": 5432,
     }
 }
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
 
 
 # Password validation
