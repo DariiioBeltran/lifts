@@ -24,8 +24,10 @@ COPY ./pyproject.toml .
 COPY ./poetry.lock .
 RUN /root/.local/bin/poetry install
 
-# copy project
-COPY . .
-# run at port 8000
-EXPOSE 8000
-CMD /app/scripts/start_server.sh
+
+# TODO: I THINK THESE LINES ARE TO RUN THE SERVER ON THE CONTAINER
+# # copy project
+# COPY . .
+# # run at port 8000
+# EXPOSE 8000
+# CMD /app/scripts/start_server.sh
