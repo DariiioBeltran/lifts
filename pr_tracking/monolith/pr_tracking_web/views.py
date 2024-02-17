@@ -56,7 +56,6 @@ def exercises(request):
 def create_workout(request):
     """
     TODO:
-        - Figure out why it's only saving one exercise in the db
         - Consider shifting the "workout_name" logic into the js in the template?
     """
     gym_rat = User.objects.get(pk=request.user.id)
@@ -77,7 +76,6 @@ def create_workout(request):
                 instance.created_at = created_at
                 instance.save()
 
-            # formset.save()
             return redirect("/home")
     else:
         workout_name = WorkoutNameForm()
@@ -95,12 +93,7 @@ def list_workouts(request):
         add a workout_ids field in the User table, it'll be an array and we'll append it w/ the workout_id when the user creates a designed_workout
 
         Once this is in place, we can query this as follows
-
-
     """
-
-    gym_rat = User.objects.get(pk=request.user.id)
-
     return render(request, "pr_tracking_web/home.html")
 
 
