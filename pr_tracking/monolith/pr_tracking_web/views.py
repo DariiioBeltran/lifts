@@ -13,9 +13,8 @@ from django.contrib.auth.models import User
 from datetime import datetime
 
 
-@login_required(login_url="/login")
-def home(request):
-    return render(request, "pr_tracking_web/home.html")
+def landing_page(request):
+    return render(request, "pr_tracking_web/landing_page.html")
 
 
 def sign_up(request):
@@ -29,6 +28,11 @@ def sign_up(request):
         form = RegistrationForm()
 
     return render(request, "registration/sign_up.html", {"form": form})
+
+
+@login_required(login_url="/login")
+def home(request):
+    return render(request, "pr_tracking_web/home.html")
 
 
 @login_required(login_url="/login")
