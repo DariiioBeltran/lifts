@@ -6,39 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>{% block title%}Gainsville{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    {% block css_source %}
+    {% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <div>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
+                        <a class="nav-link white-text" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/exercises">Exercises</a>
+                        <a class="nav-link white-text" href="/exercises">Exercises</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/create-exercise">Create Exercise</a>
+                        <a class="nav-link white-text" href="/create-exercise">Create Exercise</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/create-workout">Create Workout</a>
+                        <a class="nav-link white-text" href="/create-workout">Create Workout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/log-workout">Log Workout</a>
+                        <a class="nav-link white-text" href="/log-workout">Log Workout</a>
                     </li>
                 </ul>
             </div>
             <div>
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
-                        <span class="navbar-text">Loggedin as {{user.username}} | </span>
+                        <span class="navbar-text white-text">Loggedin as {{user.username}} | </span>
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout</a>
+                            <a class="nav-link white-text" href="/logout">Logout</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
+                            <a class="nav-link white-text" href="/login">Login</a>
                         </li>
                     {% endif %}
                 </ul>
