@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>{% block title%}Gainsville{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link href="{% static 'pr_tracking_web/base.css' %}" rel="stylesheet" type="text/css">
     {% block css_source %}
     {% endblock %}
 </head>
@@ -26,7 +26,10 @@
                         <a class="nav-link white-text" href="/create-exercise">Create Exercise</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link white-text" href="/create-workout">Create Workout</a>
+                        <a class="nav-link white-text" href="/create-workout-template">Create Workout Template</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link white-text" href="/list-workout-templates">Workout Templates</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link white-text" href="/log-workout">Log Workout</a>

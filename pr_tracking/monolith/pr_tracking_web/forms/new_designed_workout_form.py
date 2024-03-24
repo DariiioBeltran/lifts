@@ -1,17 +1,14 @@
 from django import forms
-from pr_tracking_web.models.designed_workout import DesignedWorkout
+from pr_tracking_web.models.workout_template import WorkoutTemplate, ExerciseTemplate
 
 
-class WorkoutNameForm(forms.Form):
-    workout_name = forms.CharField(label="Workout Name:", max_length="128")
-
-
-class NewDesignedWorkoutForm(forms.ModelForm):
-    def __init__(self, *args, exercise_choices, **kwargs):
-        super(NewDesignedWorkoutForm, self).__init__(*args, **kwargs)
-        choices = [(exercise.exercise_name, exercise.exercise_name) for exercise in exercise_choices]
-        self.fields["exercise_name"] = forms.ChoiceField(choices=choices)
-
+class WorkoutTemplateForm(forms.ModelForm):
     class Meta:
-        model = DesignedWorkout
+        model = WorkoutTemplate
+        fields = ["workout_template_name"]
+
+
+class ExerciseTemplateForm(forms.ModelForm):
+    class Meta:
+        model = ExerciseTemplate
         fields = ["exercise_name", "number_of_sets", "number_of_reps"]

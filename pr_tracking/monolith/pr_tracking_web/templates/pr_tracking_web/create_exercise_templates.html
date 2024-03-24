@@ -1,18 +1,16 @@
 {% extends 'pr_tracking_web/base.html' %}
 
-{% block title %}Create An Exercise{% endblock %}
+{% block title %}Create Exercise Template{% endblock %}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div style="text-align: center;">
-        <h1>Design a Workout</h1>
+        <h1>Add Your Exercises</h1>
         <hr />
 
         <form id="form-container" method="POST">
             {% csrf_token %}
-
-            {{ workout_name | crispy }}
 
             {{ formset.management_form }}
             <div id="exercise-formset">
@@ -35,11 +33,11 @@
 
     <script>
         document.getElementById('add-form').addEventListener('click', function() {
-            let formIdx = document.getElementById('id_designedworkout_set-TOTAL_FORMS').value;
+            let formIdx = document.getElementById('id_exercisetemplate_set-TOTAL_FORMS').value;
             let formSet = document.getElementById('exercise-formset');
             let emptyFormHtml = document.getElementById('empty-form').innerHTML;
             formSet.insertAdjacentHTML('beforeend', emptyFormHtml.replace(/__prefix__/g, formIdx));
-            document.getElementById('id_designedworkout_set-TOTAL_FORMS').value = parseInt(formIdx) + 1;
+            document.getElementById('id_exercisetemplate_set-TOTAL_FORMS').value = parseInt(formIdx) + 1;
         });
     </script>
 {% endblock %}
