@@ -1,104 +1,124 @@
 from django.shortcuts import render, redirect
 from .forms.registration import RegistrationForm
 from .forms.new_exercise_form import NewExerciseForm
-from .forms.new_designed_workout_form import NewDesignedWorkoutForm, WorkoutNameForm
+from .forms.new_designed_workout_form import WorkoutTemplateForm, ExerciseTemplateForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .models.exercise import Exercise
-from .models.designed_workout import DesignedWorkout
+from .models.workout_template import WorkoutTemplate, ExerciseTemplate
+from django.views.generic.base import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User
 
 from datetime import datetime
 
-
-def landing_page(request):
-    return render(request, "pr_tracking_web/landing_page.html")
+from django.views.generic.edit import FormView
 
 
-def sign_up(request):
-    if request.method == "POST":
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("/home")
-    else:
-        form = RegistrationForm()
-
-    return render(request, "registration/sign_up.html", {"form": form})
+class LandingPage(TemplateView):
+    template_name = "pr_tracking_web/landing_page.html"
 
 
-@login_required(login_url="/login")
-def home(request):
-    return render(request, "pr_tracking_web/home.html")
+class HomePage(LoginRequiredMixin, TemplateView):
+    template_name = "pr_tracking_web/home.html"
 
 
-@login_required(login_url="/login")
-def create_exerice(request):
-    if request.method == "POST":
-        form = NewExerciseForm(request.POST)
-        if form.is_valid():
-            exercise = form.save(commit=False)
-            exercise.gym_rat = request.user
-            exercise.save()
-            return redirect("/exercises")
-    else:
-        form = NewExerciseForm()
-    return render(request, "pr_tracking_web/create_exercise.html", {"form": form})
+class SignUpView(FormView):
+    template_name = "registration/sign_up.html"
+    form_class = NewExerciseForm
+    success_url = "/home"
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return super().form_valid(form)
 
 
-@login_required(login_url="/login")
-def exercises(request):
-    exercises = Exercise.objects.filter(gym_rat__exact=request.user)
-    context = {"exercises": exercises}
-    return render(request, "pr_tracking_web/exercises.html", context)
+class CreateExerciseView(LoginRequiredMixin, FormView):
+    template_name = "pr_tracking_web/create_exercise.html"
+    form_class = NewExerciseForm
+    success_url = "/exercises"
+
+    def form_valid(self, form):
+        exercise = form.save(commit=False)
+        exercise.gym_rat = self.request.user
+        exercise.save()
+        return super().form_valid(form)
 
 
-@login_required(login_url="/login")
-def create_workout(request):
-    """
-    TODO:
-        - Consider shifting the "workout_name" logic into the js in the template?
-    """
-    gym_rat = User.objects.get(pk=request.user.id)
-    exercise_choices = Exercise.objects.filter(gym_rat__exact=gym_rat)
-    DesignedWorkoutSet = inlineformset_factory(User, DesignedWorkout, form=NewDesignedWorkoutForm, extra=1)
+class ListExercisesView(LoginRequiredMixin, TemplateView):
+    template_name = "pr_tracking_web/exercises.html"
 
-    if request.method == "POST":
-        formset = DesignedWorkoutSet(request.POST, form_kwargs={"exercise_choices": exercise_choices}, instance=gym_rat)
-        workout_name = WorkoutNameForm(request.POST)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["exercises"] = Exercise.objects.filter(gym_rat__exact=self.request.user)
+        return context
 
-        if formset.is_valid() and workout_name.is_valid():
+
+class CreateWorkoutTemplateView(LoginRequiredMixin, FormView):
+    template_name = "pr_tracking_web/create_workout_template.html"
+    form_class = WorkoutTemplateForm
+
+    def form_valid(self, form):
+        workout = form.save(commit=False)
+        workout.gym_rat = self.request.user
+        workout.save()
+        self.pk = workout.pk
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("create_exercise_template", kwargs={"pk": self.pk})
+
+
+class CreateExerciseTemplatesView(LoginRequiredMixin, TemplateView):
+    template_name = "pr_tracking_web/create_exercise_templates.html"
+    ExerciseWorkoutSet = inlineformset_factory(WorkoutTemplate, ExerciseTemplate, form=ExerciseTemplateForm, extra=1)
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.workout_template = WorkoutTemplate.objects.get(id=kwargs["pk"])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["formset"] = self.ExerciseWorkoutSet(instance=self.workout_template)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return render(self.request, self.template_name, self.get_context_data(**kwargs))
+
+    def post(self, request, *args, **kwargs):
+        formset = self.ExerciseWorkoutSet(self.request.POST, instance=self.workout_template)
+        if formset.is_valid():
             instances = formset.save(commit=False)
-            workout_name_instance = workout_name.cleaned_data.get("workout_name")
             created_at = datetime.now()
 
             for instance in instances:
-                instance.workout_name = workout_name_instance
+                instance.workout_template = self.workout_template
                 instance.created_at = created_at
                 instance.save()
 
             return redirect("/home")
-    else:
-        workout_name = WorkoutNameForm()
-        formset = DesignedWorkoutSet(form_kwargs={"exercise_choices": exercise_choices})
-
-    context = {"formset": formset, "workout_name": workout_name}
-    return render(request, "pr_tracking_web/create_designed_workout.html", context)
 
 
-@login_required(login_url="/login")
-def list_workouts(request):
-    """
-    IDEA:
-        add a workout_id (maybe use uuid) col to the designed_workout table to make it easier to query
-        add a workout_ids field in the User table, it'll be an array and we'll append it w/ the workout_id when the user creates a designed_workout
+class ListWorkoutTemplatesView(LoginRequiredMixin, TemplateView):
+    template_name = "pr_tracking_web/list_workout_templates.html"
 
-        Once this is in place, we can query this as follows
-    """
-    return render(request, "pr_tracking_web/home.html")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        workouts = []
+        workout_templates = WorkoutTemplate.objects.filter(gym_rat__exact=self.request.user)
+        for workout_template in workout_templates:
+            workouts.append(
+                dict(
+                    workout_name=workout_template.workout_template_name,
+                    exercise_templates=ExerciseTemplate.objects.filter(workout_template__exact=workout_template),
+                )
+            )
+        context["workouts"] = workouts
+        return context
 
 
 @login_required(login_url="/login")

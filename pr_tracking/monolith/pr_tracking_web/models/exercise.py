@@ -17,3 +17,6 @@ class Exercise(models.Model):
     def save(self, *args, **kwargs):
         self.validate_unique_for_user()
         super(Exercise, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.exercise_name.title()

@@ -1,0 +1,21 @@
+{% extends 'pr_tracking_web/base.html' %}
+
+{% block title %}Create Workout Template{% endblock %}
+
+{% block content %}
+    <h1>Workout Templates</h1>
+    <ul>
+        {% for workout in workouts %}
+            <li>
+                {{ workout.workout_name }}
+                <ol>
+                    {% for exercise in workout.exercise_templates %}
+                        <li>
+                            {{ exercise.exercise_name }}: {{ exercise.number_of_sets }} sets of {{ exercise.number_of_reps }} reps
+                        </li>
+                    {% endfor %}
+                </ol>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
