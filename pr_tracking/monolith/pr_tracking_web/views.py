@@ -9,6 +9,8 @@ from .models.workout_template import WorkoutTemplate, ExerciseTemplate
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+from .forms.log_workout_forms import WorkoutInstanceForm, SetInstanceForm
+from .models.workout_instance import WorkoutInstance, ExerciseInstance, SetInstance
 
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User
@@ -121,6 +123,57 @@ class ListWorkoutTemplatesView(LoginRequiredMixin, TemplateView):
         return context
 
 
-@login_required(login_url="/login")
-def log_workout(request):  # TODO
-    return render(request, "pr_tracking_web/home.html")
+class CreateWorkoutInstance(LoginRequiredMixin, FormView):
+    template_name = "pr_tracking_web/create_workout_instance.html"
+    form_class = WorkoutInstanceForm
+
+    def form_valid(self, form):
+        workout_instance = form.save(commit=False)
+        workout_instance.gym_rat = self.request.user
+        workout_instance.save()
+        self.pk = workout_instance.pk
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("create_exercise_instances", kwargs={"pk": self.pk})
+
+
+class CreateExerciseInstances(LoginRequiredMixin, TemplateView):
+    template_name = "pr_tracking_web/create_exercise_instances.html"
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.workout_instance = WorkoutInstance.objects.get(pk=self.kwargs["pk"])
+        self.exercises = ExerciseTemplate.objects.filter(workout_template=self.workout_instance.workout_template)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        exercise_forms = {}
+        for exercise_template in self.exercises:
+            exercise_instance = ExerciseInstance.objects.create(
+                workout_instance=self.workout_instance,
+                exercise_template=exercise_template,
+            )
+            forms = [
+                SetInstanceForm(instance=SetInstance(exercise_instance=exercise_instance))
+                for i in range(exercise_template.number_of_sets)
+            ]
+            exercise_forms[exercise_template.exercise_name] = forms
+        context["exercise_forms"] = exercise_forms
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return render(self.request, self.template_name, self.get_context_data(**kwargs))
+
+    def post(self, request, *args, **kwargs):
+        print(f"\n\n\nREQUEST: {request.POST}\n\n\n")
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            created_at = datetime.now()
+
+            for instance in instances:
+                instance.workout_template = self.workout_template
+                instance.created_at = created_at
+                instance.save()
+
+            return redirect("/home")

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from .set_instance import SetInstance
+from .workout_instance import SetInstance
 
 
 class CurrentPersonalRecord(models.Model):
