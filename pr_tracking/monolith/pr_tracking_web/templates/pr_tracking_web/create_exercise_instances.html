@@ -9,19 +9,23 @@
         <h1>Here's your workout you skinny ass mf</h1>
         <hr />
 
-        {% for name, forms in exercise_forms.items %}
-            <h3>{{ name }}</h3>
-            <table>
-                {% for form in forms %}
-                    {% csrf_token %}
-                    <tr>
-                        <td>{{ form.weight | as_crispy_field }}</td>
-                        <td>{{ form.reps_completed | as_crispy_field }}</td>
-                        <td>{{ form.skipped | as_crispy_field }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endfor %}
-        <button type="submit" class="btn btn-success">Done already cuh?</button>
+        <form method="post">
+            {% for name, forms in exercise_forms.items %}
+                <h3>{{ name }}</h3>
+
+                <table>
+                    {% for form in forms %}
+                        <tr>
+                            {% csrf_token %}
+                            <td>{{ form.weight | as_crispy_field }}</td>
+                            <td>{{ form.reps_completed | as_crispy_field }}</td>
+                            <td>{{ form.skipped | as_crispy_field }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Done already cuh?</button>
+        </form>
     </div>
 {% endblock %}

@@ -140,6 +140,7 @@ class CreateWorkoutInstance(LoginRequiredMixin, FormView):
 
 class CreateExerciseInstances(LoginRequiredMixin, TemplateView):
     template_name = "pr_tracking_web/create_exercise_instances.html"
+    prefix_exercise_instance_map = dict()
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -148,17 +149,21 @@ class CreateExerciseInstances(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        exercise_forms = {}
+        exercise_forms = dict()
+
         for exercise_template in self.exercises:
             exercise_instance = ExerciseInstance.objects.create(
                 workout_instance=self.workout_instance,
                 exercise_template=exercise_template,
             )
-            forms = [
-                SetInstanceForm(instance=SetInstance(exercise_instance=exercise_instance))
-                for i in range(exercise_template.number_of_sets)
-            ]
+            forms = []
+            for i in range(exercise_template.number_of_sets):
+                form_prefix = f"{exercise_template.exercise_name}-{i}"
+                self.prefix_exercise_instance_map[form_prefix] = exercise_instance
+                forms.append(SetInstanceForm(prefix=form_prefix))
+
             exercise_forms[exercise_template.exercise_name] = forms
+
         context["exercise_forms"] = exercise_forms
         return context
 
@@ -166,14 +171,12 @@ class CreateExerciseInstances(LoginRequiredMixin, TemplateView):
         return render(self.request, self.template_name, self.get_context_data(**kwargs))
 
     def post(self, request, *args, **kwargs):
-        print(f"\n\n\nREQUEST: {request.POST}\n\n\n")
-        if formset.is_valid():
-            instances = formset.save(commit=False)
-            created_at = datetime.now()
+        for prefix, exercise_instance in self.prefix_exercise_instance_map.items():
+            set_instance = SetInstance(exercise_instance=exercise_instance)
+            form = SetInstanceForm(request.POST, instance=set_instance, prefix=prefix)
+            if form.is_valid():
+                form.save()
+            else:
+                raise ValueError("some message, will need to revisit")
 
-            for instance in instances:
-                instance.workout_template = self.workout_template
-                instance.created_at = created_at
-                instance.save()
-
-            return redirect("/home")
+        return redirect("/home")
