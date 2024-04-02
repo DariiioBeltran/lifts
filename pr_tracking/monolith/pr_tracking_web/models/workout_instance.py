@@ -9,6 +9,9 @@ class WorkoutInstance(models.Model):
     workout_template = models.ForeignKey(WorkoutTemplate, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return str(self.workout_template.workout_template_name)
+
 
 class ExerciseInstance(models.Model):
     workout_instance = models.ForeignKey(WorkoutInstance, on_delete=models.CASCADE)  # TODO: rethink this on_delete

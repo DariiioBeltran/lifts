@@ -1,0 +1,20 @@
+{% extends 'pr_tracking_web/base.html' %}
+
+{% block title %}List Specific Workout Instances{% endblock %}
+
+{% block content %}
+    <h1>{{ workout_title }}</h1>
+
+    {% for name, sets in exercises.items %}
+        <p>{{ name }}</p>
+        <ol>
+            {% for set in sets %}
+                {% if set.skipped %}
+                    <li>SKIPPED</li>
+                {% else %}
+                    <li>{{ set.weight }} for {{ set.reps_completed }} reps</li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    {% endfor %}
+{% endblock %}

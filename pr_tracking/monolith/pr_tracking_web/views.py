@@ -11,6 +11,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from .forms.log_workout_forms import WorkoutInstanceForm, SetInstanceForm
 from .models.workout_instance import WorkoutInstance, ExerciseInstance, SetInstance
+from django.views.generic.list import ListView
+
 
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User
@@ -180,3 +182,34 @@ class CreateExerciseInstances(LoginRequiredMixin, TemplateView):
                 raise ValueError("some message, will need to revisit")
 
         return redirect("/home")
+
+
+class ListPerformances(LoginRequiredMixin, ListView):
+    template_name = "pr_tracking_web/list_workout_instances.html"
+    model = WorkoutInstance
+    context_object_name = "workout_instances"
+    paginate_by = 100
+
+    def get_queryset(self):
+        return WorkoutInstance.objects.filter(gym_rat__exact=self.request.user)  # TODO: order by date, recent to old
+
+
+class ListPerformancesByWorkoutTemplate(LoginRequiredMixin, TemplateView):
+    template_name = "pr_tracking_web/list_specific_workout_instances.html"
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.workout_instance = WorkoutInstance.objects.get(id=kwargs["pk"])
+        self.exercise_instances = ExerciseInstance.objects.filter(workout_instance=self.workout_instance)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["workout_title"] = self.workout_instance
+        exercises_obj = dict()
+        for exercise in self.exercise_instances:
+            exercises_obj[exercise.exercise_template.exercise_name] = SetInstance.objects.filter(
+                exercise_instance=exercise
+            )
+
+        context["exercises"] = exercises_obj
+        return context
