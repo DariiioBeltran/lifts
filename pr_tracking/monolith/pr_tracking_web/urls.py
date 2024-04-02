@@ -13,5 +13,12 @@ urlpatterns = [
         "create-workout-template/<str:pk>", views.CreateExerciseTemplatesView.as_view(), name="create_exercise_template"
     ),
     path("list-workout-templates", views.ListWorkoutTemplatesView.as_view(), name="list_workout_templates"),
-    path("log-workout", views.log_workout, name="log_workout"),
+    path("log-workout", views.CreateWorkoutInstance.as_view(), name="create_workout_instance"),
+    path("log-workout/<str:pk>", views.CreateExerciseInstances.as_view(), name="create_exercise_instances"),
+    path("list-performances", views.ListPerformances.as_view(), name="list_performances"),
+    path(
+        "list-performances/<str:pk>",
+        views.ListPerformancesByWorkoutTemplate.as_view(),
+        name="list_performances_by_workout_template",
+    ),
 ]

@@ -1,0 +1,16 @@
+{% extends 'pr_tracking_web/base.html' %}
+
+{% block title %}List Workout Instances{% endblock %}
+
+{% block content %}
+<h1>All your past workouts, what tremendous beauty....I'm proud (I'm lying)</h1>
+<ul>
+    {% for workout_instance in workout_instances %}
+        <li>
+            <a class="nav-link white-text" href="/list-performances/{{ workout_instance.pk }}">
+                {{ workout_instance }} at {{ workout_instance.created_at }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -7,6 +7,9 @@ class WorkoutTemplate(models.Model):
     gym_rat = models.ForeignKey(User, on_delete=models.CASCADE)
     workout_template_name = models.CharField(max_length=128)
 
+    def __str__(self):
+        return self.workout_template_name.title()
+
 
 class ExerciseTemplate(models.Model):
     workout_template = models.ForeignKey(WorkoutTemplate, on_delete=models.CASCADE)
