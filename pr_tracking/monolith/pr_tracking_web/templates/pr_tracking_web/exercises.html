@@ -1,12 +1,19 @@
 {% extends 'pr_tracking_web/base.html' %}
 
+{% block css_source %}
+    {% load static %}
+    <link href="{% static 'pr_tracking_web/exercises.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
-<h1>Exercise List Here</h1>
-<ul>
-    {% for exercise in exercises %}
-        <li>{{ exercise.exercise_name }}</li>
-    {% endfor %}
-</ul>
+    <div class="position-absolute start-50 translate-middle-x">
+        <h1 class="text-white">Exercise List Here</h1>
+        <ul>
+            {% for exercise in exercises %}
+                <li class="text-white">{{ exercise.exercise_name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

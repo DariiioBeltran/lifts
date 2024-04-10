@@ -2,6 +2,85 @@
 
 {% block title %}Home Page{% endblock %}
 
+{% block css_source %}
+    {% load static %}
+    <link href="{% static 'pr_tracking_web/home.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block content %}
-<h1>Home Page!</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card bg-dark text-white">
+                    <div class="card-body border border-3 rounded">
+                        <h1 class="card-title text-center">Your Exercises</h1>
+
+                        <ul class="list-group list-group-flush px-5">
+                            {% for exercise in exercises %}
+                                <li class="list-group-item bg-dark text-white">
+                                    {{ exercise }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h1 class="text-white text-center">Workout Templates</h1>
+
+                <div class="accordion accordion-flush" id="accordionExample">
+                    {% for workout_template in workout_templates %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{forloop.counter}}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
+                                    {{ workout_template.workout_template.workout_template_name }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{forloop.counter}}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{forloop.counter}}" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <ol>
+                                        {% for exercise in workout_template.exercise_templates %}
+                                            <li>
+                                                {{ exercise.exercise_name }}: {{ exercise.number_of_sets }} sets of {{ exercise.number_of_reps }} reps
+                                            </li>
+                                        {% endfor %}
+                                    </ol>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <a class="nav-link text-white" href="/performances/list-performances/templates/{{workout_template.workout_template.pk}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                                                <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+                                            </svg>
+                                        </a>
+                                        <a class="nav-link text-white" href="/performances/log-workout/{{workout_template.workout_template.pk}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col">
+                <div class="card bg-dark text-white">
+                    <div class="card-body border border-3 rounded">
+                        <h1 class="card-title">All your past workouts, what tremendous beauty....I'm proud (I'm lying)</h1>
+
+                        <ul class="list-group list-group-flush px-5">
+                            {% for workout_instance in workout_instances %}
+                                <li class="list-group-item bg-dark text-white">
+                                    <a class="text-white" href="/performances/list-performances/instances/{{ workout_instance.pk }}" style="text-decoration: none;">
+                                        {{ workout_instance }} at {{ workout_instance.created_at }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
