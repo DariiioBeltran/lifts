@@ -5,25 +5,30 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div style="text-align: center;">
-        <h1>Here's your workout you skinny ass mf</h1>
+    <div class="text-center position-absolute start-50 translate-middle-x">
+        <h1 class="text-white">Here's your workout you skinny ass mf</h1>
         <hr />
 
         <form method="post">
             {% for name, forms in exercise_forms.items %}
-                <h3>{{ name }}</h3>
-
-                <table>
-                    {% for form in forms %}
-                        <tr>
-                            {% csrf_token %}
-                            <td>{{ form.weight | as_crispy_field }}</td>
-                            <td>{{ form.reps_completed | as_crispy_field }}</td>
-                            <td>{{ form.skipped | as_crispy_field }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-
+                <div class="card bg-dark text-white my-3" style="width: 50rem;">
+                    <div class="card-body border border-3 rounded">
+                        <h3 class="card-title">{{ name }}</h3>
+                        <hr />
+                        <div class="d-flex justify-content-center">
+                            <table>
+                                {% for form in forms %}
+                                    <tr>
+                                        {% csrf_token %}
+                                        <td>{{ form.weight | as_crispy_field }}</td>
+                                        <td>{{ form.reps_completed | as_crispy_field }}</td>
+                                        <td>{{ form.skipped | as_crispy_field }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
             <button type="submit" class="btn btn-success">Done already cuh?</button>
         </form>

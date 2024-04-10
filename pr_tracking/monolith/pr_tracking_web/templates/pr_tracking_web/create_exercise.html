@@ -4,9 +4,22 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}{{ form | crispy }}
+    <div class="position-absolute start-50 translate-middle-x">
+        <h1 class="text-white">Create an Exercise</h1>
 
-        <button type="submit" class="btn btn-success">Add Exercise</button>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="exercise_name" class="form-label text-white">Exercise Name</label>
+                <input id="exercise_name" type="text" name="exercise_name" class="form-control" maxlength="128" required>
+            </div>
+            <div class="mb-3">
+                <label for="body_part" class="form-label text-white">Body Part</label>
+                <input id="body_part" type="text" name="body_part" class="form-control" maxlength="128">
+            </div>
+
+            <button type="submit" class="btn btn-primary position-absolute start-50 translate-middle-x">Submit</button>
+        </form>
+    </div>
 {% endblock %}

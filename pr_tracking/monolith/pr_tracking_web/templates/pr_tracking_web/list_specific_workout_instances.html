@@ -3,16 +3,16 @@
 {% block title %}List Specific Workout Instances{% endblock %}
 
 {% block content %}
-    <h1>{{ workout_title }}</h1>
+    <h1 class="text-white text-center">{{ workout_title }}</h1>
 
     {% for name, sets in exercises.items %}
-        <p>{{ name }}</p>
+        <p class="text-white">{{ name }}</p>
         <ol>
             {% for set in sets %}
                 {% if set.skipped %}
-                    <li>SKIPPED</li>
+                    <li class="text-white">SKIPPED</li>
                 {% else %}
-                    <li>{{ set.weight }} for {{ set.reps_completed }} reps</li>
+                    <li class="text-white">{{ set.weight }} for {{ set.reps_completed }} reps</li>
                 {% endif %}
             {% endfor %}
         </ol>
