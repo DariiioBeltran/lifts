@@ -9,11 +9,19 @@
 
 {% block content %}
     <div class="position-absolute start-50 translate-middle-x">
-        <h1 class="text-white">Exercise List Here</h1>
-        <ul>
-            {% for exercise in exercises %}
-                <li class="text-white">{{ exercise.exercise_name }}</li>
-            {% endfor %}
-        </ul>
+        <div class="card bg-dark text-white">
+            <div class="card-body border border-3 rounded">
+                <h1 class="card-title text-center">Exercise List Here</h1>
+                <hr />
+
+                <ul class="list-group list-group-flush px-5">
+                    {% for exercise in exercises %}
+                        <li class="list-group-item bg-dark text-white">
+                            {{ exercise.exercise_name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 {% endblock %}

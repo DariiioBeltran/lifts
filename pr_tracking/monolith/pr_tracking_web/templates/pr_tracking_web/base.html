@@ -8,6 +8,7 @@
     <title>{% block title%}Gainsville{% endblock %}</title>
     {% load static %}
     <link href="{% static 'pr_tracking_web/base.css' %}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{% static 'pr_tracking_web/jquery-3.7.1.js' %}"></script>
     {% block css_source %}
     {% endblock %}
 </head>
@@ -27,9 +28,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/performances/list-performances">Performances</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/performances/log-workout">Log Workout</a>
                     </li>
                 </ul>
             </div>
