@@ -21,7 +21,7 @@ from django.views.generic.edit import FormView
 class CreateExerciseView(LoginRequiredMixin, FormView):
     template_name = "pr_tracking_web/create_exercise.html"
     form_class = NewExerciseForm
-    success_url = "/exercises"
+    success_url = "/exercises/exercises"
 
     def form_valid(self, form):
         exercise = form.save(commit=False)
