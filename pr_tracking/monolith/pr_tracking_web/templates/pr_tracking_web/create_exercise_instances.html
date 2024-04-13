@@ -12,7 +12,7 @@
         <form method="post">
             {% for name, forms in exercise_forms.items %}
                 <div class="card bg-dark text-white my-3" style="width: 50rem;">
-                    <div class="card-body border border-3 rounded">
+                    <div class="card-body border border-danger rounded">
                         <h3 class="card-title">{{ name }}</h3>
                         <hr />
                         <div class="d-flex justify-content-center">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-danger">Done already cuh?</button>
+            <button type="submit" class="btn btn-danger mb-5">Done already cuh?</button>
         </form>
     </div>
 {% endblock %}
