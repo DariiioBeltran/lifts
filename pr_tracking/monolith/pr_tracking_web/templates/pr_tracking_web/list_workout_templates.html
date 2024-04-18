@@ -4,20 +4,27 @@
 
 {% block content %}
     <div class="position-absolute start-50 translate-middle-x">
-        <h1 class="text-white">Workout Templates</h1>
-        <ul>
-            {% for workout in workouts %}
-                <li class="text-white">
-                    {{ workout.workout_name }}
-                    <ol>
-                        {% for exercise in workout.exercise_templates %}
-                            <li class="text-white">
-                                {{ exercise.exercise_name }}: {{ exercise.number_of_sets }} sets of {{ exercise.number_of_reps }} reps
-                            </li>
-                        {% endfor %}
-                    </ol>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="card bg-dark text-white">
+            <div class="card-body border border-danger rounded">
+                <h1 class="card-title text-center">Workout Templates</h1>
+                <hr />
+
+                <ul class="list-group list-group-flush px-5">
+                    {% for workout in workouts %}
+                        <li class="list-group-item bg-dark text-white">
+                            {{ workout.workout_name }}
+
+                            <ol>
+                                {% for exercise in workout.exercise_templates %}
+                                    <li class="text-white">
+                                        {{ exercise.exercise_name }}: {{ exercise.number_of_sets }} sets of {{ exercise.number_of_reps }} reps
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 {% endblock %}

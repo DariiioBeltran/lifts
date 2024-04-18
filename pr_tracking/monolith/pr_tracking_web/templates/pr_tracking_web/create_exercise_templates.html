@@ -5,39 +5,52 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div style="text-align: center;">
-        <h1>Add Your Exercises</h1>
-        <hr />
-
+    <div class="d-flex justify-content-center">
         <form id="form-container" method="POST">
             {% csrf_token %}
-
             {{ formset.management_form }}
-            <div id="exercise-formset">
-                {% for form in formset %}
-                    <table>
-                            {{ form.as_table }}
-                    </table>
-                {% endfor %}
-            </div>
 
-            <button id="add-form" type="button" class="btn btn-danger">Add An Exercise</button>
-            <div id="empty-form" style="display:none;">
-                <table>
-                    {{ formset.empty_form.as_table }}
-                </table>
+            <div class="card bg-dark text-white my-3" style="width: 50rem;">
+                <div class="card-body border border-danger rounded">
+                    <h1 class="card-title text-white text-center">Add Your Exercises</h1>
+                    <hr />
+
+                    <div class="d-flex justify-content-center">
+                        <table>
+                            <tbody id="exercise-formset">
+                                {% for form in formset %}
+                                    <tr>
+                                        <td>{{ form.exercise_name | as_crispy_field }}</td>
+                                        <td>{{ form.number_of_sets | as_crispy_field }}</td>
+                                        <td>{{ form.number_of_reps | as_crispy_field }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                <tr id="empty-form" style="display:none;">
+                                    <td>{{ formset.empty_form.exercise_name | as_crispy_field }}</td>
+                                    <td>{{ formset.empty_form.number_of_sets | as_crispy_field }}</td>
+                                    <td>{{ formset.empty_form.number_of_reps | as_crispy_field }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button id="add-form" type="button" class="btn btn-danger mx-1">Add An Exercise</button>
+                        <button type="submit" class="btn btn-danger mx-1">Add Workout</button>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-danger">Add Workout</button>
         </form>
     </div>
 
     <script>
-        document.getElementById('add-form').addEventListener('click', function() {
-            let formIdx = document.getElementById('id_exercisetemplate_set-TOTAL_FORMS').value;
-            let formSet = document.getElementById('exercise-formset');
-            let emptyFormHtml = document.getElementById('empty-form').innerHTML;
-            formSet.insertAdjacentHTML('beforeend', emptyFormHtml.replace(/__prefix__/g, formIdx));
-            document.getElementById('id_exercisetemplate_set-TOTAL_FORMS').value = parseInt(formIdx) + 1;
+        $('#add-form').on('click', function() {
+            let formIdx = $('#id_exercisetemplate_set-TOTAL_FORMS').val();
+            let formSet = $('#exercise-formset');
+            let emptyFormHtml = $('#empty-form').html();
+            formSet.append(`<tr>${emptyFormHtml.replace(/__prefix__/g, formIdx)}</tr>`);
+            $('#id_exercisetemplate_set-TOTAL_FORMS').val(parseInt(formIdx) + 1);
         });
     </script>
 {% endblock %}

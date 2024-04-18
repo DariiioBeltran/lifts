@@ -4,22 +4,28 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="position-absolute start-50 translate-middle-x">
-        <h1 class="text-white">Create an Exercise</h1>
-
+    <div class="text-center position-absolute start-50 translate-middle-x">
         <form method="post">
             {% csrf_token %}
+            <div class="card bg-dark text-white my-3" style="width: 50rem;">
+                <div class="card-body border border-danger rounded">
+                    <h1 class="card-title">Create an Exercise</h1>
+                    <hr />
 
-            <div class="mb-3">
-                <label for="exercise_name" class="form-label text-white">Exercise Name</label>
-                <input id="exercise_name" type="text" name="exercise_name" class="form-control" maxlength="128" required>
-            </div>
-            <div class="mb-3">
-                <label for="body_part" class="form-label text-white">Body Part</label>
-                <input id="body_part" type="text" name="body_part" class="form-control" maxlength="128">
-            </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="mx-1">
+                            <label for="exercise_name" class="form-label text-white">Exercise Name</label>
+                            <input id="exercise_name" type="text" name="exercise_name" class="form-control" maxlength="128" required>
+                        </div>
+                        <div class="mx-1">
+                            <label for="body_part" class="form-label text-white">Body Part</label>
+                            <input id="body_part" type="text" name="body_part" class="form-control" maxlength="128">
+                        </div>
+                    </div>
 
-            <button type="submit" class="btn btn-danger position-absolute start-50 translate-middle-x">Submit</button>
+                    <button type="submit" class="btn btn-danger mt-3">Submit</button>
+                </div>
+            </div>
         </form>
     </div>
 {% endblock %}

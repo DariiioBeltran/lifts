@@ -3,18 +3,30 @@
 {% block title %}List Specific Workout Instances{% endblock %}
 
 {% block content %}
-    <h1 class="text-white text-center">{{ workout_title }}</h1>
+    <div class="position-absolute start-50 translate-middle-x">
+        <div class="card bg-dark text-white">
+            <div class="card-body border border-danger rounded">
+                <h1 class="card-title text-center">{{ workout_title }}</h1>
+                <hr />
 
-    {% for name, sets in exercises.items %}
-        <p class="text-white">{{ name }}</p>
-        <ol>
-            {% for set in sets %}
-                {% if set.skipped %}
-                    <li class="text-white">SKIPPED</li>
-                {% else %}
-                    <li class="text-white">{{ set.weight }} for {{ set.reps_completed }} reps</li>
-                {% endif %}
-            {% endfor %}
-        </ol>
-    {% endfor %}
+                <ul class="list-group list-group-flush px-5">
+                    {% for name, sets in exercises.items %}
+                        <li class="list-group-item bg-dark text-white">
+                            {{ name }}
+
+                            <ol>
+                                {% for set in sets %}
+                                    {% if set.skipped %}
+                                        <li class="text-white">SKIPPED</li>
+                                    {% else %}
+                                        <li class="text-white">{{ set.weight }} for {{ set.reps_completed }} reps</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ol>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}
