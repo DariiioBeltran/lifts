@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "pr_tracking_web",
+    "swole_stats_api",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
