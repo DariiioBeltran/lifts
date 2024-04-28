@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from swole_stats_api.serializers.gym_rat_serializers import GymRatSerializer
 
 
-class GymRatList(generics.ListAPIView):
+class GymRatList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = GymRatSerializer
 

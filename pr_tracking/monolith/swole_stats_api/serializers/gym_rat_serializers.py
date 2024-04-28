@@ -5,17 +5,24 @@ from swole_stats_api.models.outline_models import WorkoutOutline
 from swole_stats_api.models.record_models import WorkoutRecord
 
 
+from .notional_serializers import NotionalExerciseSerializer
+from .outline_serializers import WorkoutOutlineSerializer
+
+
 class GymRatSerializer(serializers.ModelSerializer):
-    exercises = serializers.PrimaryKeyRelatedField(many=True, queryset=NotionalExercise.objects.all())
-    # workout_outlines = serializers.PrimaryKeyRelatedField(many=True, queryset=WorkoutOutline.objects.all())
-    # workout_records = serializers.PrimaryKeyRelatedField(many=True, queryset=WorkoutRecord.objects.all())
+    exercises = NotionalExerciseSerializer(many=True, read_only=True)
+    workout_outline = WorkoutOutlineSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
         fields = [
             "id",
             "username",
+            "first_name",
+            "last_name",
+            "email",
+            "password",
             "exercises",
-            # 'workout_outlines',
-            # 'workout_records',
+            "workout_outline",
         ]
+        extra_kwargs = {"password": {"write_only": True}}
