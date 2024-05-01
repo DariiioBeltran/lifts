@@ -26,3 +26,14 @@ class GymRatSerializer(serializers.ModelSerializer):
             "workout_outline",
         ]
         extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        gym_rat = User.objects.create_user(**validated_data)
+        return gym_rat
+
+
+class GymRatIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id"]
+        extra_kwargs = {"id": {"write_only": True}}

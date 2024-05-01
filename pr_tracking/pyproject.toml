@@ -17,6 +17,8 @@ django-crispy-forms = "^2.0"
 pre-commit = "^3.6.0"
 python-dotenv = "^1.0.1"
 djangorestframework = "^3.15.1"
+django-cors-headers = "^4.3.1"
+djangorestframework-simplejwt = "^5.3.1"
 
 
 [build-system]
