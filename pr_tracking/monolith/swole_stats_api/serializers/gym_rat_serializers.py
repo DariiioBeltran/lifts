@@ -1,10 +1,9 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.models import User
 from swole_stats_api.models.notional_models import NotionalExercise
 from swole_stats_api.models.outline_models import WorkoutOutline
 from swole_stats_api.models.record_models import WorkoutRecord
-
-
 from .notional_serializers import NotionalExerciseSerializer
 from .outline_serializers import WorkoutOutlineSerializer
 
@@ -37,3 +36,16 @@ class GymRatIdSerializer(serializers.ModelSerializer):
         model = User
         fields = ["id"]
         extra_kwargs = {"id": {"write_only": True}}
+
+
+class GymRatTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id"]
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data["id"] = GymRatTokenSerializer(self.user).data["id"]
+        return data

@@ -7,7 +7,7 @@ urlpatterns = [
     path("gym_rats/", gym_rat_views.GymRatList.as_view()),
     path("gym_rats/<int:pk>", gym_rat_views.GymRatDetail.as_view()),
     # Auth Views
-    path("token/", TokenObtainPairView.as_view()),
+    path("token/", gym_rat_views.MyTokenObtainPairView.as_view()),
     path("token/refresh/", TokenRefreshView.as_view()),
     # Exercise Views
     path("notional_exercise/", notional_views.NotionalExercisesList.as_view()),
