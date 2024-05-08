@@ -3,16 +3,17 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from enum import Enum
 from django.utils.translation import gettext_lazy as _
+from django.contrib.postgres.fields import ArrayField
 
 
 class NotionalExercise(models.Model):
     MUSCLE_GROUPS = (
-        ("SHOULDERS", _("SHOULDERS")),
-        ("BACK", _("BACK")),
-        ("CHEST", _("CHEST")),
-        ("ARMS", _("ARMS")),
-        ("LEGS", _("LEGS")),
-        ("CORE", _("CORE")),
+        ("SHOULDERS", "SHOULDERS"),
+        ("BACK", "BACK"),
+        ("CHEST", "CHEST"),
+        ("ARMS", "ARMS"),
+        ("LEGS", "LEGS"),
+        ("CORE", "CORE"),
     )
 
     EXERCISE_SCOPE = (
@@ -31,7 +32,11 @@ class NotionalExercise(models.Model):
     gym_rat = models.ForeignKey(User, related_name="exercises", on_delete=models.CASCADE)
     exercise_name = models.CharField(max_length=128)
     primary_muscle_group = models.CharField(max_length=128, choices=MUSCLE_GROUPS)
-    secondary_muscle_groups = models.CharField(max_length=128, choices=MUSCLE_GROUPS, blank=True, null=True)
+    secondary_muscle_groups = ArrayField(
+        models.CharField(max_length=128, blank=True, choices=MUSCLE_GROUPS),
+        default=list,
+        blank=True,
+    )
     exercise_scope = models.CharField(max_length=128, choices=EXERCISE_SCOPE)
     equipment_category = models.CharField(max_length=128, choices=EQUIPMENT_CATEGORY)
     created_at = models.DateTimeField(auto_now=True)
