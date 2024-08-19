@@ -20,3 +20,6 @@ class ExerciseOutline(models.Model):
     number_of_sets = models.IntegerField()
     number_of_reps = models.IntegerField()
     created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.notional_exercise.exercise_name

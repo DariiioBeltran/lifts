@@ -9,7 +9,7 @@ class WorkoutRecord(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.workout_template.workout_template_name)
+        return str(self.workout_outline.workout_outline_name)
 
 
 class SetRecord(models.Model):
@@ -40,3 +40,6 @@ class SetRecord(models.Model):
             self.volume = int(self.weight) * int(self.reps_completed)
 
         super(SetRecord, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{str(self.exercise_outline)} at {self.created_at.strftime('%Y-%m-%d')}"
