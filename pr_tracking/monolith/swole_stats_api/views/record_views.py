@@ -4,7 +4,7 @@ from rest_framework import generics
 
 
 class WorkoutRecordListView(generics.ListCreateAPIView):
-    queryset = WorkoutRecord.objects.all()
+    queryset = WorkoutRecord.objects.all().order_by("-id")[:14]
     serializer_class = WorkoutRecordSerializer
 
 

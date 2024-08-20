@@ -14,6 +14,7 @@ class SetRecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = SetRecord
         fields = [
+            "id",
             "exercise_outline",
             "exercise_outline_id",
             "weight",
