@@ -20,6 +20,8 @@ class SetRecordSerializer(serializers.ModelSerializer):
             "weight",
             "reps_completed",
             "skipped",
+            "volume",
+            "created_at",
         ]
 
 
