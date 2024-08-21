@@ -1,5 +1,5 @@
 from django.urls import include, path
-from swole_stats_api.views import notional_views, outline_views, record_views, gym_rat_views
+from swole_stats_api.views import notional_views, outline_views, record_views, gym_rat_views, stat_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -18,4 +18,8 @@ urlpatterns = [
     # Record Views
     path("workout_records/", record_views.WorkoutRecordListView.as_view()),
     path("workout_records/<int:pk>", record_views.WorkoutRecordDetail.as_view()),
+    path("set_records/", record_views.SetRecordListView.as_view()),
+    path("set_records/<int:pk>", record_views.SetRecordDetail.as_view()),
+    # Stat Views
+    path("exercise_stats/<int:pk>", stat_views.ExerciseStatsListView.as_view()),
 ]

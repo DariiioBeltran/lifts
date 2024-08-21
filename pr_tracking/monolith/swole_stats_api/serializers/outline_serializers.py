@@ -12,7 +12,14 @@ class ExerciseOutlineSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExerciseOutline
-        fields = ["id", "notional_exercise_id", "notional_exercise", "number_of_sets", "number_of_reps"]
+        fields = [
+            "id",
+            "workout_outline",
+            "notional_exercise_id",
+            "notional_exercise",
+            "number_of_sets",
+            "number_of_reps",
+        ]
 
 
 class WorkoutOutlineSerializer(serializers.ModelSerializer):
