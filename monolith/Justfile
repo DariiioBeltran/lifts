@@ -1,8 +1,0 @@
-run:
-    poetry run gunicorn monolith.monolith.wsgi
-make-migrations:
-    poetry run python manage.py makemigrations
-migrate:
-    poetry run python manage.py migrate
-create-superuser:
-    poetry run python manage.py createsuperuser
