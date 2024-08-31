@@ -25,3 +25,5 @@ tzdata==2023.4 ; python_version >= "3.10" and python_version < "4.0" and sys_pla
 virtualenv==20.25.0 ; python_version >= "3.10" and python_version < "4.0"
 
 gunicorn
+dj-database-url
+psycopg2
