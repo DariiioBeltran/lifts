@@ -58,8 +58,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "rest_framework",
     "rest_framework.authtoken",
-    "pr_tracking_web",
-    "swole_stats_api",
+    "monolith.pr_tracking_web",
+    "monolith.swole_stats_api",
     "corsheaders",
 ]
 
@@ -78,7 +78,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = "monolith.urls"
+ROOT_URLCONF = "monolith.monolith.urls"
 
 TEMPLATES = [
     {

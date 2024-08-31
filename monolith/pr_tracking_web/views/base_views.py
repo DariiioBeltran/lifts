@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
-from pr_tracking_web.forms.registration import RegistrationForm
-from pr_tracking_web.forms.new_exercise_form import NewExerciseForm
-from pr_tracking_web.forms.new_designed_workout_form import WorkoutTemplateForm, ExerciseTemplateForm
+from monolith.pr_tracking_web.forms.registration import RegistrationForm
+from monolith.pr_tracking_web.forms.new_exercise_form import NewExerciseForm
+from monolith.pr_tracking_web.forms.new_designed_workout_form import WorkoutTemplateForm, ExerciseTemplateForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from pr_tracking_web.models.exercise import Exercise
-from pr_tracking_web.models.workout_template import WorkoutTemplate, ExerciseTemplate
+from monolith.pr_tracking_web.models.exercise import Exercise
+from monolith.pr_tracking_web.models.workout_template import WorkoutTemplate, ExerciseTemplate
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from pr_tracking_web.forms.log_workout_forms import WorkoutInstanceForm, SetInstanceForm
-from pr_tracking_web.models.workout_instance import WorkoutInstance, ExerciseInstance, SetInstance
+from monolith.pr_tracking_web.forms.log_workout_forms import WorkoutInstanceForm, SetInstanceForm
+from monolith.pr_tracking_web.models.workout_instance import WorkoutInstance, ExerciseInstance, SetInstance
 from django.views.generic.list import ListView
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User

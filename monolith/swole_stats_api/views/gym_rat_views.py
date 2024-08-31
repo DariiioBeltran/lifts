@@ -1,6 +1,6 @@
 from rest_framework import generics
 from django.contrib.auth.models import User
-from swole_stats_api.serializers.gym_rat_serializers import GymRatSerializer, MyTokenObtainPairSerializer
+from monolith.swole_stats_api.serializers.gym_rat_serializers import GymRatSerializer, MyTokenObtainPairSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 

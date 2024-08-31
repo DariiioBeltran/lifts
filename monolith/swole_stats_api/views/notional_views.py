@@ -1,5 +1,5 @@
-from swole_stats_api.serializers.notional_serializers import NotionalExerciseSerializer
-from swole_stats_api.models.notional_models import NotionalExercise
+from monolith.swole_stats_api.serializers.notional_serializers import NotionalExerciseSerializer
+from monolith.swole_stats_api.models.notional_models import NotionalExercise
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 

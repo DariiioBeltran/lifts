@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from swole_stats_api.models.record_models import SetRecord, WorkoutRecord
+from monolith.swole_stats_api.models.record_models import SetRecord, WorkoutRecord
 
-from swole_stats_api.models.outline_models import WorkoutOutline, ExerciseOutline
+from monolith.swole_stats_api.models.outline_models import WorkoutOutline, ExerciseOutline
 from .outline_serializers import ExerciseOutlineSerializer, WorkoutOutlineSerializer
 
 

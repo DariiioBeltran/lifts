@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from swole_stats_api.models.outline_models import WorkoutOutline, ExerciseOutline
-from swole_stats_api.models.notional_models import NotionalExercise
+from monolith.swole_stats_api.models.outline_models import WorkoutOutline, ExerciseOutline
+from monolith.swole_stats_api.models.notional_models import NotionalExercise
 from .notional_serializers import NotionalExerciseSerializer
 
 

@@ -1,8 +1,8 @@
-from swole_stats_api.serializers.record_serializers import WorkoutRecordSerializer, SetRecordSerializer
-from swole_stats_api.models.record_models import WorkoutRecord, SetRecord
-from swole_stats_api.models.outline_models import ExerciseOutline
+from monolith.swole_stats_api.serializers.record_serializers import WorkoutRecordSerializer, SetRecordSerializer
+from monolith.swole_stats_api.models.record_models import WorkoutRecord, SetRecord
+from monolith.swole_stats_api.models.outline_models import ExerciseOutline
 
-from swole_stats_api.models.notional_models import NotionalExercise
+from monolith.swole_stats_api.models.notional_models import NotionalExercise
 
 from rest_framework import generics
 
