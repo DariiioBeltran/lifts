@@ -14,6 +14,9 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
+from django.core.management.utils import get_random_secret_key
+import sys
+import dj_database_url
 
 # ENV VARS
 load_dotenv()
@@ -26,12 +29,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-fje(51+dehckv@c=y_x&!ekl(t2ht1-ldjgaer14e7cizunf08"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key()) # "django-insecure-fje(51+dehckv@c=y_x&!ekl(t2ht1-ldjgaer14e7cizunf08"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("DJANGO_SECRET_KEY", "127.0.0.1,localhost").split(",")
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
@@ -99,17 +102,25 @@ WSGI_APPLICATION = "monolith.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": "localhost",
-        "PORT": 5432,
-    }
-}
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
+if DEVELOPMENT_MODE:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "postgres",
+            "USER": "postgres",
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": "localhost",
+            "PORT": 5432,
+        }
+    }
+elif len(sys.argv) > 0 and sys.argv[1] != "collectstatic":
+    if os.getenv("DATABASE_URL", None) is None:
+        raise Exception("DATABASE_URL environment variable not defined")
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
