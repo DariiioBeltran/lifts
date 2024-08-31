@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from swole_stats_api.models.notional_models import NotionalExercise
+from monolith.swole_stats_api.models.notional_models import NotionalExercise
 from django.contrib.auth.models import User
 
 

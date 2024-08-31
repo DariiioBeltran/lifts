@@ -1,5 +1,5 @@
-from swole_stats_api.serializers.outline_serializers import WorkoutOutlineSerializer
-from swole_stats_api.models.outline_models import WorkoutOutline
+from monolith.swole_stats_api.serializers.outline_serializers import WorkoutOutlineSerializer
+from monolith.swole_stats_api.models.outline_models import WorkoutOutline
 from rest_framework import generics
 
 from rest_framework.permissions import IsAuthenticated, AllowAny

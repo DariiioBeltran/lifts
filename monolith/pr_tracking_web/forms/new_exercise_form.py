@@ -1,5 +1,5 @@
 from django import forms
-from pr_tracking_web.models.exercise import Exercise
+from monolith.pr_tracking_web.models.exercise import Exercise
 
 
 class NewExerciseForm(forms.ModelForm):

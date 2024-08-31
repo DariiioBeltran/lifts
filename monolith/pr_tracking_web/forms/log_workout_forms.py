@@ -1,5 +1,5 @@
 from django import forms
-from pr_tracking_web.models.workout_instance import WorkoutInstance, SetInstance
+from monolith.pr_tracking_web.models.workout_instance import WorkoutInstance, SetInstance
 
 
 class WorkoutInstanceForm(forms.ModelForm):

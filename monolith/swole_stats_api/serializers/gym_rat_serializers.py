@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.models import User
-from swole_stats_api.models.notional_models import NotionalExercise
-from swole_stats_api.models.outline_models import WorkoutOutline
-from swole_stats_api.models.record_models import WorkoutRecord
+from monolith.swole_stats_api.models.notional_models import NotionalExercise
+from monolith.swole_stats_api.models.outline_models import WorkoutOutline
+from monolith.swole_stats_api.models.record_models import WorkoutRecord
 from .notional_serializers import NotionalExerciseSerializer
 from .outline_serializers import WorkoutOutlineSerializer
 

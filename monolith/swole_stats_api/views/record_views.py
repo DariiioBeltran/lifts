@@ -1,5 +1,5 @@
-from swole_stats_api.serializers.record_serializers import WorkoutRecordSerializer, SetRecordSerializer
-from swole_stats_api.models.record_models import WorkoutRecord, SetRecord
+from monolith.swole_stats_api.serializers.record_serializers import WorkoutRecordSerializer, SetRecordSerializer
+from monolith.swole_stats_api.models.record_models import WorkoutRecord, SetRecord
 from rest_framework import generics
 
 

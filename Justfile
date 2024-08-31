@@ -4,3 +4,6 @@ setup-dev:
 
 lint:
     pre-commit run --all-files
+
+run:
+    poetry run gunicorn monolith.monolith.wsgi

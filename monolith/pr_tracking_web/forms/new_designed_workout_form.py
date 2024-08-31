@@ -1,5 +1,5 @@
 from django import forms
-from pr_tracking_web.models.workout_template import WorkoutTemplate, ExerciseTemplate
+from monolith.pr_tracking_web.models.workout_template import WorkoutTemplate, ExerciseTemplate
 
 
 class WorkoutTemplateForm(forms.ModelForm):

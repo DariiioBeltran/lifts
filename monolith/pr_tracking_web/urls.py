@@ -1,5 +1,5 @@
 from django.urls import include, path
-from pr_tracking_web.views import base_views, exercise_views, performance_views, workout_template_views
+from monolith.pr_tracking_web.views import base_views, exercise_views, performance_views, workout_template_views
 
 
 exercise_patterns = [
@@ -42,10 +42,10 @@ performance_patterns = [
 ]
 
 urlpatterns = [
-    path("", base_views.LandingPage.as_view(), name="landing_page"),
-    path("home", base_views.HomePage.as_view(), name="home"),
-    path("sign-up", base_views.SignUpView.as_view(), name="sign_up"),
-    path("exercises/", include(exercise_patterns)),
-    path("workout-templates/", include(workout_template_patterns)),
-    path("performances/", include(performance_patterns)),
+    # path("", base_views.LandingPage.as_view(), name="landing_page"),
+    # path("home", base_views.HomePage.as_view(), name="home"),
+    # path("sign-up", base_views.SignUpView.as_view(), name="sign_up"),
+    # path("exercises/", include(exercise_patterns)),
+    # path("workout-templates/", include(workout_template_patterns)),
+    # path("performances/", include(performance_patterns)),
 ]
