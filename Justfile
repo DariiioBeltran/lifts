@@ -17,3 +17,7 @@ collectstatic:
 run:
     just collectstatic
     poetry run gunicorn monolith.wsgi
+webpack:
+    cd mentzer && npm run dev
+    cd ..
+    just collectstatic
