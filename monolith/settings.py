@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "pr_tracking_web",
     "swole_stats_api",
     "corsheaders",
+    "mentzer.apps.MentzerConfig",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

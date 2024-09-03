@@ -6,8 +6,6 @@ setup-dev:
     poetry install
 
 # Django Commands
-run:
-    poetry run gunicorn monolith.wsgi
 make-migrations:
     poetry run python manage.py makemigrations
 migrate:
@@ -16,3 +14,6 @@ create-superuser:
     poetry run python manage.py createsuperuser
 collectstatic:
     poetry run python manage.py collectstatic --noinput
+run:
+    just collectstatic
+    poetry run gunicorn monolith.wsgi
