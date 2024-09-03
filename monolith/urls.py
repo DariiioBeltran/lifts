@@ -20,8 +20,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("pr_tracking_web/", include("pr_tracking_web.urls")),
+    # path("pr_tracking_web/", include("pr_tracking_web.urls")),
     path("api/", include("swole_stats_api.urls")),
-    path("", include("django.contrib.auth.urls")),
+    path("", include("mentzer.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("api-auth/", include("rest_framework.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
