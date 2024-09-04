@@ -9,6 +9,7 @@ class ExerciseOutlineSerializer(serializers.ModelSerializer):
     notional_exercise_id = serializers.SlugRelatedField(
         queryset=NotionalExercise.objects.all(), slug_field="id", write_only=True
     )
+    workout_outline = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = ExerciseOutline

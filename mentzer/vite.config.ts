@@ -5,8 +5,6 @@ import * as path from 'path';
 
 const env = loadEnv('', path.resolve(__dirname, '../'));
 
-console.log(env)
-
 export default defineConfig({
     // depending on your application, base can also be "/"
     base: '',
