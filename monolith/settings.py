@@ -107,6 +107,9 @@ WSGI_APPLICATION = "wsgi.application"
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
+"""
+    This was the previous setup w/ the separate db container, will revisit this
+    Switching to other approach here for now: https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu
 if DEVELOPMENT_MODE:
     DATABASES = {
         "default": {
@@ -124,6 +127,17 @@ elif len(sys.argv) > 0 and sys.argv[1] != "collectstatic":
     DATABASES = {
         "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv("POSTGRES_NAME", "something_went_wrong_here"),
+        'USER': os.getenv("POSTGRES_USER", "something_went_wrong_here"),
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "something_went_wrong_here"),
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
