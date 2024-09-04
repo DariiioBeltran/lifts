@@ -1,8 +1,6 @@
 import axios from "axios";
 import { ACCESS_TOKEN } from "./constants/authConstants";
 
-console.log(`API BASE URL: ${process.env.VITE_API_URL}`)
-
 const api = axios.create({
     baseURL: process.env.VITE_API_URL
 })
